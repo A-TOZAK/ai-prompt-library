@@ -24,6 +24,10 @@
   const $empty = document.getElementById("emptyState");
   const $count = document.getElementById("resultCount");
   const $toast = document.getElementById("toast");
+  const $editPanel = document.getElementById("editPanel");
+  const $editOverlay = document.getElementById("editOverlay");
+  const $editTextarea = document.getElementById("editTextarea");
+  const $editPanelClose = document.getElementById("editPanelClose");
 
   /* ---------- ユーティリティ ---------- */
 
@@ -223,7 +227,10 @@
         '<h2 class="card-title">' + escapeHtml(p.title) + "</h2>" +
         '<p class="card-desc">' + escapeHtml(p.description) + "</p>" +
         '<div class="prompt-box"><pre class="prompt-text">' + escapeHtml(p.prompt) + "</pre></div>" +
-        '<button class="copy-btn">📋 コピーする</button>' +
+        '<div class="card-actions">' +
+          '<button class="copy-btn">📋 コピー</button>' +
+          '<button class="edit-btn">✏️ 編集して使う</button>' +
+        '</div>' +
         '<div class="card-tags">' +
           (p.tags || []).map(function (t) {
             return '<span class="tag" data-tag="' + escapeHtml(t) + '">#' + escapeHtml(t) + "</span>";
@@ -232,6 +239,9 @@
 
       card.querySelector(".copy-btn").addEventListener("click", function () {
         copyText(p.prompt, this);
+      });
+      card.querySelector(".edit-btn").addEventListener("click", function () {
+        openEditPanel(p.prompt);
       });
       card.querySelectorAll(".tag").forEach(function (el) {
         el.addEventListener("click", function () {
@@ -313,6 +323,48 @@
       e.preventDefault();
       $search.focus();
     }
+  });
+
+  /* ---------- 編集パネル ---------- */
+
+  function openEditPanel(promptText) {
+    $editTextarea.value = promptText;
+    $editPanel.classList.add("open");
+    $editOverlay.classList.add("open");
+    setTimeout(function () { $editTextarea.focus(); }, 320);
+  }
+
+  function closeEditPanel() {
+    $editPanel.classList.remove("open");
+    $editOverlay.classList.remove("open");
+  }
+
+  $editPanelClose.addEventListener("click", closeEditPanel);
+  $editOverlay.addEventListener("click", closeEditPanel);
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && $editPanel.classList.contains("open")) {
+      closeEditPanel();
+    }
+  });
+
+  document.querySelectorAll(".ai-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var text = $editTextarea.value;
+      var name = btn.dataset.name;
+      var url  = btn.dataset.url;
+      function openAI() {
+        window.open(url, "_blank", "noopener");
+        showToast("コピーして " + name + " を開きました — そのまま貼り付けてください");
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(openAI).catch(function () {
+          fallbackCopy(text); openAI();
+        });
+      } else {
+        fallbackCopy(text); openAI();
+      }
+    });
   });
 
   /* ---------- 起動 ---------- */
