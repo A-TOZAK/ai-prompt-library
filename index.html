@@ -52,24 +52,27 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <!-- 編集パネル -->
-  <div id="editPanel" class="edit-panel" role="dialog" aria-modal="true" aria-label="プロンプト編集">
-    <div class="edit-panel-header">
-      <span class="edit-panel-title">✏️ プロンプトを編集して使う</span>
-      <button id="editPanelClose" class="edit-panel-close" title="閉じる">✕</button>
-    </div>
-    <div class="edit-panel-body">
-      <textarea id="editTextarea" class="edit-textarea" placeholder="ここでプロンプトを自由に書き換えられます。[　] 内のプレースホルダーを自分の内容に置き換えてみてください。" spellcheck="false"></textarea>
-      <p class="edit-hint">コピーして開きたいAIを選んでください。クリップボードに内容をコピーしてから新しいタブで開きます。</p>
-      <div class="ai-buttons">
-        <button class="ai-btn ai-btn-claude"       data-url="https://claude.ai/new"               data-name="Claude">🟠 Claude</button>
-        <button class="ai-btn ai-btn-chatgpt"      data-url="https://chatgpt.com"                 data-name="ChatGPT">🤖 ChatGPT</button>
-        <button class="ai-btn ai-btn-gemini"       data-url="https://gemini.google.com"           data-name="Gemini">✨ Gemini</button>
-        <button class="ai-btn ai-btn-notebooklm"   data-url="https://notebooklm.google.com"       data-name="NotebookLM">📓 NotebookLM</button>
+  <!-- 編集モーダル -->
+  <div id="editOverlay" class="edit-overlay">
+    <div id="editPanel" class="edit-panel" role="dialog" aria-modal="true" aria-label="プロンプト編集">
+      <div class="edit-panel-header">
+        <span class="edit-panel-title">プロンプトを編集して使う</span>
+        <button id="editPanelClose" class="edit-panel-close" title="閉じる">✕</button>
+      </div>
+      <div class="edit-panel-body">
+        <textarea id="editTextarea" class="edit-textarea" placeholder="[　] 内のプレースホルダーを自分の内容に書き換えてください。" spellcheck="false"></textarea>
+        <div class="edit-panel-footer">
+          <button id="editCopyBtn" class="edit-copy-btn">コピー</button>
+          <div class="ai-buttons">
+            <button class="ai-btn ai-btn-claude"      data-url="https://claude.ai/new"            data-name="Claude">Claude</button>
+            <button class="ai-btn ai-btn-chatgpt"     data-url="https://chatgpt.com"              data-name="ChatGPT">ChatGPT</button>
+            <button class="ai-btn ai-btn-gemini"      data-url="https://gemini.google.com"        data-name="Gemini">Gemini</button>
+            <button class="ai-btn ai-btn-notebooklm"  data-url="https://notebooklm.google.com"    data-name="NotebookLM">NotebookLM</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div id="editOverlay" class="edit-overlay"></div>
 
   <script src="js/prompts-data.js"></script>
   <script src="js/school-prompts-1.js"></script>

@@ -28,6 +28,7 @@
   const $editOverlay = document.getElementById("editOverlay");
   const $editTextarea = document.getElementById("editTextarea");
   const $editPanelClose = document.getElementById("editPanelClose");
+  const $editCopyBtn = document.getElementById("editCopyBtn");
 
   /* ---------- ユーティリティ ---------- */
 
@@ -340,11 +341,33 @@
   }
 
   $editPanelClose.addEventListener("click", closeEditPanel);
-  $editOverlay.addEventListener("click", closeEditPanel);
+
+  $editOverlay.addEventListener("click", function (e) {
+    if (e.target === $editOverlay) closeEditPanel();
+  });
 
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && $editPanel.classList.contains("open")) {
+    if (e.key === "Escape" && $editOverlay.classList.contains("open")) {
       closeEditPanel();
+    }
+  });
+
+  $editCopyBtn.addEventListener("click", function () {
+    var text = $editTextarea.value;
+    var btn = this;
+    function done() {
+      btn.classList.add("copied");
+      btn.textContent = "コピーしました";
+      showToast("クリップボードにコピーしました");
+      setTimeout(function () {
+        btn.classList.remove("copied");
+        btn.textContent = "コピー";
+      }, 1600);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text); done(); });
+    } else {
+      fallbackCopy(text); done();
     }
   });
 
