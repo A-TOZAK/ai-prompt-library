@@ -21,6 +21,10 @@
   --c-notebooklm: #0f9d58;
   --c-chatgpt: #10a37f;
   --c-common: #6b7280;
+  /* 校種カラー */
+  --c-es: #f59e0b;
+  --c-jhs: #3b82f6;
+  --c-hs: #8b5cf6;
 }
 
 * { box-sizing: border-box; }
@@ -99,6 +103,37 @@ body {
   border-radius: 50%;
   cursor: pointer;
   font-size: .85rem;
+}
+
+/* ---------- コレクション切替 ---------- */
+.collection-toggle {
+  display: inline-flex;
+  background: #e9edf5;
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 16px;
+  gap: 4px;
+}
+
+.collection-toggle .seg {
+  border: none;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: inherit;
+  font-size: .98rem;
+  font-weight: 700;
+  padding: 9px 20px;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+
+.collection-toggle .seg:hover { color: var(--ink); }
+
+.collection-toggle .seg.active {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 1px 4px rgba(16, 24, 40, .12);
 }
 
 /* ---------- フィルタ ---------- */

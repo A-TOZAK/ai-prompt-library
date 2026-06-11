@@ -26,7 +26,11 @@
   </header>
 
   <nav class="filters container">
-    <div class="filter-group" id="toolTabs" role="tablist" aria-label="AIツールで絞り込み"></div>
+    <div class="collection-toggle" id="collectionToggle" role="tablist" aria-label="コレクション切替">
+      <button class="seg active" data-collection="work">🧰 しごと・AI活用</button>
+      <button class="seg" data-collection="school">🏫 授業・教科（小中高）</button>
+    </div>
+    <div class="filter-group" id="toolTabs" role="tablist" aria-label="ツール・校種で絞り込み"></div>
     <div class="filter-group" id="categoryChips" aria-label="カテゴリで絞り込み"></div>
     <p class="result-count" id="resultCount"></p>
   </nav>
@@ -49,6 +53,10 @@
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script src="js/prompts-data.js"></script>
+  <script src="js/school-prompts-1.js"></script>
+  <script src="js/school-prompts-2.js"></script>
+  <script src="js/school-prompts-3.js"></script>
+  <script src="js/school-prompts-4.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
